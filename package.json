@@ -1,0 +1,27 @@
+{
+  "name": "connect-url-pipe",
+  "version": "1.0.0",
+  "description": "URL arguments piping",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Xananax/connect-url-pipe.git"
+  },
+  "keywords": [
+    "connect",
+    "express",
+    "routing"
+  ],
+  "author": "xananax@yelostudio.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Xananax/connect-url-pipe/issues"
+  },
+  "homepage": "https://github.com/Xananax/connect-url-pipe"
+}
