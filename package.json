@@ -1,6 +1,6 @@
 {
   "name": "connect-url-pipe",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "URL arguments piping",
   "main": "index.js",
   "directories": {

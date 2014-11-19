@@ -36,12 +36,12 @@ var makeRoute = function(routes,optionsParser){
 			if(err){return next(err);}
 			if(i>=opts.length){return next();}
 			var moduleName = opts[i];
-			if(!routes[moduleName]){
-				return DynamicMiddlewareNextOption(i, new Error('no dynamic middleware named '+moduleName+' was found'));
-			}
 			opts.$current = moduleName;
 			opts.$options = opts[moduleName];
 			opts.$index = i;
+			if(!routes[moduleName]){
+				return DynamicMiddlewareNextOption(i, new Error('no dynamic middleware named '+moduleName+' was found'));
+			}
 			routes[moduleName](req,res,DynamicMiddlewareNextOption.bind(null,i+1));
 		}
 		DynamicMiddlewareNextOption(0);
