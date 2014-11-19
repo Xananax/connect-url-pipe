@@ -32,15 +32,18 @@ var makeRoute = function(routes,optionsParser){
 		var opts = optionsParser(req);
 		if(!opts || !opts.length){return next();}
 		req.urlPipeOptions = opts;
+		var errs = opts.$errors = [];
 		function DynamicMiddlewareNextOption(i,err){
-			if(err){return next(err);}
-			if(i>=opts.length){return next();}
+			if(err){errs.push(err);}
+			if(i>=opts.length){
+				return errs.length ? next(err[0]):next();
+			}
 			var moduleName = opts[i];
 			opts.$current = moduleName;
 			opts.$options = opts[moduleName];
 			opts.$index = i;
 			if(!routes[moduleName]){
-				return DynamicMiddlewareNextOption(i, new Error('no dynamic middleware named '+moduleName+' was found'));
+				return DynamicMiddlewareNextOption(i+1,new Error('no dynamic middleware named '+moduleName+' was found'));
 			}
 			routes[moduleName](req,res,DynamicMiddlewareNextOption.bind(null,i+1));
 		}

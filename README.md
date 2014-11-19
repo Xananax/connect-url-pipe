@@ -60,23 +60,25 @@ For the `dynamicRoutes` above, `req.urlPipeOptions` will be:
 ```js
 {
     'toLowerCase':[function]
-,   0:[function toLowerCase]
+,   0:'toLowerCase'
 ,   'replace':[function]
-,   1: [function Replace]
+,   1:'replace'
 ,   'append':[function]
-,   2: [function append]
+,   2:'append'
 ,   'length':3
 ,   '$current':'toLowerCase'
 ,   '$index':0
 ,   '$options':null
+,   '$errors':[]
 }
 ```
 
-Only the function names are enumerable, the numeric indices, `length`,`$current` and `$index` are not.
+Only the function names are enumerable, the numeric indices, `length`,`$current`, `$errors` and `$index` are not.
 
 - `$current` gives you the name of the current route
 - `$index` gives you the index of the current route (useful if you want to know if it's loaded before or after another module)
 - `$options` gives you the URL options provided.
+- `$errors` is an array of errors (if any)
 
 -------
 
@@ -92,6 +94,18 @@ var dynamicRouter = urlPipe('options',dynamicRoutes,'/':':');
 ```
 
 `options` is the name of the param to use. It depends on how you set up your url; since in our example, the url is `/:string/:options(*)?`, we use `options`.
+
+If a module that doesn't exist is called, the process will be not be interrupted, but an array of errors will be passed to the next middleware.
+```js
+app.get('/:path/:options(*)?',dynamicRoutes,function(req,res,next){
+        if(req.urlPipeOptions.$errors.length){
+            res.send(req.urlPipeOptions.$errors.join(',<br>'));
+        }else{
+            next();
+        }
+    })
+```
+
 
 ----
 
